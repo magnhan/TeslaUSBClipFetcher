@@ -6,10 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.extensions.jsonBody
+import com.google.gson.Gson
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var clips: ByteArray
+    //lateinit var clips: ByteArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,12 +22,21 @@ class MainActivity : AppCompatActivity() {
             Fuel.post(
                 "json")
                 .jsonBody("{ \"car_name\" : \"Nabobil\" }")
-                .response {result -> clips = result.get()
+                .response {result ->
+                    //val gson: Gson
+                    val (bytes, error) = result
+                    if (bytes != null) {
+                        val clips = Gson().fromJson(String(bytes), Map::class.java)
+                        val savedClips = clips["SavedClips"]
+                        val sentryClips = clips["SentryClips"]
+                        println(sentryClips)
+                        println("[response bytes] ${String(bytes)}")
+                    }
                 }
         } catch (e: Exception){
             println("ting er fucka opp ${e.message}")
         }
-        print(clips)
+        //print(clips)
     }
 }
 
