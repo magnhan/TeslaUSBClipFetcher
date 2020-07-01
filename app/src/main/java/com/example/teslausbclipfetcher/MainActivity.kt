@@ -9,7 +9,7 @@ import com.github.kittinunf.fuel.core.extensions.jsonBody
 
 class MainActivity : AppCompatActivity() {
 
-    var clips: String = ""
+    lateinit var clips: ByteArray
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
             Fuel.post(
                 "json")
                 .jsonBody("{ \"car_name\" : \"Nabobil\" }")
-                .response {result -> clips = result.get().content
+                .response {result -> clips = result.get()
                 }
         } catch (e: Exception){
             println("ting er fucka opp ${e.message}")
