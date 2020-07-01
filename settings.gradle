@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "TeslaUSB Clip Fetcher"
