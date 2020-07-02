@@ -5,22 +5,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context="com.example.teslausbclipfetcher.MainActivity">
 
     <LinearLayout
+        android:id="@+id/root_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
 
+        <EditText
+            android:id="@+id/editVIN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="VIN" />
+
         <Button
             android:layout_width="match_parent"
-            android:layout_height="234dp"
+            android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:background="@color/colorPrimary"
             android:onClick="httpPostJson"
             android:text="POST RESPONSE"
             android:textColor="#ffffff" />
 
+        <VideoView
+            android:id="@+id/youtubeView"
+            android:layout_width="wrap_content"
+            android:layout_height="250dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp" />
+        <!--app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"-->
     </LinearLayout>
+
+
 </ScrollView>
