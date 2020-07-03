@@ -1,11 +1,12 @@
 package com.example.teslausbclipfetcher
 
-import android.net.Uri
+// import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.VideoView
+// import android.view.ViewGroup
+// import android.widget.LinearLayout
+import android.widget.TextView
+// import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
@@ -22,32 +23,32 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun httpPostJson(view: View) {
-        println(editVIN.text)
+        // println(editVIN.text)
         try {
             Fuel.post(
                 "json"
             )
                 .jsonBody(
-                    "{\"car_name\" : \"${editVIN.text}\"}"
+                    "{  \"car_name\" : \"${editVIN.text}\"  }"
                 )
                 .response { result ->
                     val (bytes, error) = result
                     if (bytes != null) {
                         val clips = Gson().fromJson(String(bytes), Map::class.java)
-                        print(clips)
+                        // print(clips)
                         @Suppress("UNCHECKED_CAST")
                         val savedClips = clips["SentryClips"] as List<String>
                         @Suppress("UNCHECKED_CAST")
                         val sentryClips = clips["SentryClips"] as List<String>
                         if (savedClips.isNotEmpty()) {
                             for (video in savedClips) {
-                                println("Kaller funksjon for $video")
+                                // println("Kaller funksjon for $video")
                                 addVideoView(video)
                             }
                         }
                         if (sentryClips.isNotEmpty()) {
                             for (video in sentryClips) {
-                                println("Kaller funksjon for $video")
+                                // ("Kaller funksjon for $video")
                                 addVideoView(video)
                             }
                         }
@@ -59,7 +60,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addVideoView(url: String) {
-        val videoView = VideoView(this)
+        val output: TextView = findViewById(R.id.outputText)
+        var newText: String = "${output.text}" + "\n$url"
+        if (output.text == "") {
+            newText = url
+        }
+        output.text = newText
+        // println(url)
+        /*val videoView = VideoView(this)
         val params = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -73,6 +81,6 @@ class MainActivity : AppCompatActivity() {
         println("video satt")
         // videoView.start()
         val linearLayout: LinearLayout = findViewById(R.id.root_layout)
-        // linearLayout.addView(videoView)
+        // linearLayout.addView(videoView)*/
     }
 }
