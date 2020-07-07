@@ -1,18 +1,23 @@
 package com.example.teslausbclipfetcher
 
 // import android.net.Uri
-import android.os.Bundle
-import android.view.View
 // import android.view.ViewGroup
 // import android.widget.LinearLayout
-import android.widget.TextView
 // import android.widget.VideoView
+
+import android.net.Uri
+import android.os.Bundle
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
 import com.github.kittinunf.fuel.core.extensions.jsonBody
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
+import wseemann.media.FFmpegMediaMetadataRetriever
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,7 +42,7 @@ class MainActivity : AppCompatActivity() {
                         val clips = Gson().fromJson(String(bytes), Map::class.java)
                         // print(clips)
                         @Suppress("UNCHECKED_CAST")
-                        val savedClips = clips["SentryClips"] as List<String>
+                        val savedClips = clips["SavedClips"] as List<String>
                         @Suppress("UNCHECKED_CAST")
                         val sentryClips = clips["SentryClips"] as List<String>
                         if (savedClips.isNotEmpty()) {
@@ -66,6 +71,8 @@ class MainActivity : AppCompatActivity() {
             newText = url
         }
         output.text = newText
+        val thumbnailView: ImageView = findViewById(R.id.thumbnail)
+        //  fillThumbnailView(thumbnailView,url)
         // println(url)
         /*val videoView = VideoView(this)
         val params = LinearLayout.LayoutParams(
@@ -82,5 +89,21 @@ class MainActivity : AppCompatActivity() {
         // videoView.start()
         val linearLayout: LinearLayout = findViewById(R.id.root_layout)
         // linearLayout.addView(videoView)*/
+    }
+
+    private fun fillThumbnailView(view: ImageView, videoPath: String){
+        val mmr = FFmpegMediaMetadataRetriever()
+        val mUri: Uri = Uri.parse(videoPath)
+        mmr.setDataSource(view.context, mUri)
+        // mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM)
+        // mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST)
+        val b = mmr.getFrameAtTime(
+            2000000,
+            FFmpegMediaMetadataRetriever.OPTION_CLOSEST
+        ) // frame at 2 seconds
+        view.setImageBitmap(b)
+        val artwork = mmr.embeddedPicture
+
+        mmr.release()
     }
 }
