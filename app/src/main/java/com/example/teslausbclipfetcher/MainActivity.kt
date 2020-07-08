@@ -11,6 +11,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -31,43 +32,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun httpPostJson(view: View) {
-        // println(editVIN.text)
-        try {
-            Fuel.post(
-                "json"
-            )
-                .jsonBody(
-                    "{  \"car_name\" : \"${editVIN.text}\"  }"
-                )
-                .response { result ->
-                    val (bytes, error) = result
-                    if (bytes != null) {
-                        val clips = Gson().fromJson(String(bytes), Map::class.java)
-                        // print(clips)
-                        @Suppress("UNCHECKED_CAST")
-                        val savedClips = clips["SavedClips"] as List<String>
-                        @Suppress("UNCHECKED_CAST")
-                        val sentryClips = clips["SentryClips"] as List<String>
-                        if (savedClips.isNotEmpty()) {
-                            for (video in savedClips) {
-                                // println("Kaller funksjon for $video")
-                                addVideoView(video)
-                            }
-                        }
-                        if (sentryClips.isNotEmpty()) {
-                            for (video in sentryClips) {
-                                // ("Kaller funksjon for $video")
-                                addVideoView(video)
-                            }
-                        }
-                        val thumbnailView: ImageView = findViewById(R.id.thumbnail)
-                        thumbnailView.setImageBitmap(fillThumbnailView("https://storage.googleapis.com/uploaded_tesla_videos/Nabobil/SavedClips/2020-06-25_14-25-53/2020-06-25_14-15-31-back.mp4"))
-
-                    }
-                }
-        } catch (e: Exception) {
-            println(e.message)
-        }
+        val editVIN: EditText = findViewById(R.id.editVIN)
+        val thisRequest: ClipRequest = postRequest(editVIN.text.toString())
+        println("request: $thisRequest")
     }
 
     private fun addVideoView(url: String) {
@@ -97,13 +64,13 @@ class MainActivity : AppCompatActivity() {
         // linearLayout.addView(videoView)*/
     }
 
-    private fun fillThumbnailView(videoPath: String): Bitmap {
+    private fun getThumbnail(videoPath: String): Bitmap {
         val mmr = FFmpegMediaMetadataRetriever()
         mmr.setDataSource(videoPath)
         val b = mmr.getFrameAtTime(
             1000000,
             FFmpegMediaMetadataRetriever.OPTION_CLOSEST
-        ) // frame at 2 seconds
+        ) // frame at 1 second
         mmr.release()
         return b
     }
