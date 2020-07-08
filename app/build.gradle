@@ -28,6 +28,12 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -44,6 +50,8 @@ dependencies {
     implementation 'com.github.kittinunf.fuel:fuel:2.2.3'
     implementation 'com.github.kittinunf.fuel:fuel-android:2.2.3'
 
-    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.15'
-    implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.15'
+    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-core:1.0.15'
+    //implementation 'com.github.wseemann:FFmpegMediaMetadataRetriever-native:1.0.15'
+
+    compile(name:'all-fmmr', ext:'aar')
 }

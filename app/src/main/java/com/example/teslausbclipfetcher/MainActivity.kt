@@ -5,8 +5,11 @@ package com.example.teslausbclipfetcher
 // import android.widget.LinearLayout
 // import android.widget.VideoView
 
+import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -57,6 +60,9 @@ class MainActivity : AppCompatActivity() {
                                 addVideoView(video)
                             }
                         }
+                        val thumbnailView: ImageView = findViewById(R.id.thumbnail)
+                        thumbnailView.setImageBitmap(fillThumbnailView("https://storage.googleapis.com/uploaded_tesla_videos/Nabobil/SavedClips/2020-06-25_14-25-53/2020-06-25_14-15-31-back.mp4"))
+
                     }
                 }
         } catch (e: Exception) {
@@ -71,8 +77,8 @@ class MainActivity : AppCompatActivity() {
             newText = url
         }
         output.text = newText
-        val thumbnailView: ImageView = findViewById(R.id.thumbnail)
-        //  fillThumbnailView(thumbnailView,url)
+        //val thumbnailView: ImageView = findViewById(R.id.thumbnail)
+        //val b = fillThumbnailView(url)
         // println(url)
         /*val videoView = VideoView(this)
         val params = LinearLayout.LayoutParams(
@@ -91,19 +97,14 @@ class MainActivity : AppCompatActivity() {
         // linearLayout.addView(videoView)*/
     }
 
-    private fun fillThumbnailView(view: ImageView, videoPath: String){
+    private fun fillThumbnailView(videoPath: String): Bitmap {
         val mmr = FFmpegMediaMetadataRetriever()
-        val mUri: Uri = Uri.parse(videoPath)
-        mmr.setDataSource(view.context, mUri)
-        // mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ALBUM)
-        // mmr.extractMetadata(FFmpegMediaMetadataRetriever.METADATA_KEY_ARTIST)
+        mmr.setDataSource(videoPath)
         val b = mmr.getFrameAtTime(
-            2000000,
+            1000000,
             FFmpegMediaMetadataRetriever.OPTION_CLOSEST
         ) // frame at 2 seconds
-        view.setImageBitmap(b)
-        val artwork = mmr.embeddedPicture
-
         mmr.release()
+        return b
     }
 }
