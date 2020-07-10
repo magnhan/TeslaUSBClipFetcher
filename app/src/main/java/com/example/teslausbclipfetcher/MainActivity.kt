@@ -1,11 +1,25 @@
 package com.example.teslausbclipfetcher
 
+// import android.net.Uri
+// import android.view.ViewGroup
+// import android.widget.LinearLayout
+// import android.widget.VideoView
+
+import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.github.kittinunf.fuel.Fuel
+import com.github.kittinunf.fuel.core.FuelManager
+import com.github.kittinunf.fuel.core.extensions.jsonBody
+import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_main.*
 import wseemann.media.FFmpegMediaMetadataRetriever
 
 
@@ -14,12 +28,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        FuelManager.instance.basePath = "http://www.teslausb-281110.ey.r.appspot.com"
     }
 
     fun httpPostJson(view: View) {
         val editVIN: EditText = findViewById(R.id.editVIN)
         val thisRequest: ClipRequest = postRequest(editVIN.text.toString())
-        println("request: ${thisRequest.sentryClips}")
+        println("request: $thisRequest")
     }
 
     private fun addVideoView(url: String) {
