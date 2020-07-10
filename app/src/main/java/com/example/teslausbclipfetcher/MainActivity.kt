@@ -1,29 +1,19 @@
 package com.example.teslausbclipfetcher
 
-// import android.net.Uri
-// import android.view.ViewGroup
-// import android.widget.LinearLayout
-// import android.widget.VideoView
-
-import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.fuel.core.FuelManager
-import com.github.kittinunf.fuel.core.extensions.jsonBody
-import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_main.*
 import wseemann.media.FFmpegMediaMetadataRetriever
 
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var car: Car
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +22,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun httpPostJson(view: View) {
+        println("Creating car object")
         val editVIN: EditText = findViewById(R.id.editVIN)
-        val thisRequest: ClipRequest = postRequest(editVIN.text.toString())
-        println("request: $thisRequest")
+        this.car = Car(editVIN.text.toString())
+        ClipRequest.postRequest(this.car)
+    }
+
+    fun viewClips(view: View) {
+        if(car.fetched){
+            val thumbnailView: ImageView = findViewById(R.id.thumbnail)
+            var b: Bitmap? = null
+            /*for(video in car.savedClips){
+                b = getThumbnail(video)
+            }*/
+            thumbnailView.setImageBitmap(getThumbnail(car.savedClips[0]))
+        }
     }
 
     private fun addVideoView(url: String) {
@@ -65,6 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getThumbnail(videoPath: String): Bitmap {
+        println("Displaying thumbnail")
         val mmr = FFmpegMediaMetadataRetriever()
         mmr.setDataSource(videoPath)
         val b = mmr.getFrameAtTime(
