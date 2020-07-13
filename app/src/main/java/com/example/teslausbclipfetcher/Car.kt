@@ -12,4 +12,8 @@ data class Car(val vin: String) {
         println("Clips fetched for ${this.vin}")
     }
 
+    fun newLoadReady(){
+        this.fetched = false;
+    }
+
 }

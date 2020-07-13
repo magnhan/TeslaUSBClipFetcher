@@ -1,8 +1,10 @@
 package com.example.teslausbclipfetcher
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,7 +15,7 @@ import wseemann.media.FFmpegMediaMetadataRetriever
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var car: Car
+    var car: Car = Car("")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +28,30 @@ class MainActivity : AppCompatActivity() {
         val editVIN: EditText = findViewById(R.id.editVIN)
         this.car = Car(editVIN.text.toString())
         ClipRequest.postRequest(this.car)
+        val savedButton: Button = findViewById(R.id.savedButton)
+        val sentryButton: Button = findViewById(R.id.sentryButton)
+        while(!this.car.fetched){
+            savedButton.setBackgroundColor(resources.getColor(R.color.colorDisabled, theme))
+            sentryButton.setBackgroundColor(resources.getColor(R.color.colorDisabled, theme))
+            // animation activity
+        }
+        this.car.fetched = false
+        savedButton.setBackgroundColor(resources.getColor(R.color.colorPrimary, theme))
+        sentryButton.setBackgroundColor(resources.getColor(R.color.colorPrimary, theme))
+
     }
 
-    fun viewClips(view: View) {
+    fun viewSaved(view: View){
+        openActivity2()
+    }
+
+    private fun openActivity2(){
+        startActivity(MainActivity2.getIntent(this, this.car.savedClips))
+    }
+
+    /*fun viewClips(view: View) {
         if(car.fetched){
+
             val thumbnailView: ImageView = findViewById(R.id.thumbnail)
             var b: Bitmap? = null
             /*for(video in car.savedClips){
@@ -37,15 +59,15 @@ class MainActivity : AppCompatActivity() {
             }*/
             thumbnailView.setImageBitmap(getThumbnail(car.savedClips[0]))
         }
-    }
+    }*/
 
     private fun addVideoView(url: String) {
-        val output: TextView = findViewById(R.id.outputText)
+        /*val output: TextView = findViewById(R.id.outputText)
         var newText: String = "${output.text}" + "\n$url"
         if (output.text == "") {
             newText = url
         }
-        output.text = newText
+        output.text = newText*/
         //val thumbnailView: ImageView = findViewById(R.id.thumbnail)
         //val b = fillThumbnailView(url)
         // println(url)

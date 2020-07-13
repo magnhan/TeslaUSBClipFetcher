@@ -22,7 +22,8 @@
             android:ems="10"
             android:inputType="text"
             android:text=""
-            android:hint="VIN"/>
+            android:hint="VIN"
+            android:autofillHints="text"/>
 
         <Button
             android:layout_width="match_parent"
@@ -42,19 +43,61 @@
             android:onClick="viewClips"
             android:text="View clips"
             android:textColor="#ffffff" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
+            style="?android:attr/buttonBarStyle">
+            <!--<ProgressBar
+                android:id="@+id/progressBar1"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />-->
+            <Button
+                android:id="@+id/savedButton"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="5dp"
+                android:background="@color/colorDisabled"
+                android:onClick="viewSaved"
+                android:text="View saved clips"
+                android:textColor="#ffffff"/>
+            <Button
+                android:id="@+id/sentryButton"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="5dp"
+                android:background="@color/colorDisabled"
+                android:onClick="viewSentry"
+                android:text="View sentry clips"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
+        <!--<ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/savedClips"/>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="10dp"
-            android:id="@+id/thumbnail"/>
+            android:id="@+id/sentryClips"/>
         <TextView
             android:id="@+id/outputText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="10dp"/>
-        <!--<VideoView
+        <VideoView
             android:id="@+id/youtubeView"
             android:layout_width="wrap_content"
             android:layout_height="250dp"
