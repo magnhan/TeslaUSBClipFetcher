@@ -35,11 +35,11 @@ class MainActivity : AppCompatActivity() {
         val sentryButton: Button = findViewById(R.id.sentryButton)
         thread {
             while(!this.car.fetched) {
-                savedButton.setBackgroundColor(resources.getColor(R.color.colorDisabled, null))
-                sentryButton.setBackgroundColor(resources.getColor(R.color.colorDisabled, null))
+                disableButton(savedButton)
+                disableButton(sentryButton)
             }
-            savedButton.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
-            sentryButton.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
+            enableButton(savedButton)
+            enableButton(sentryButton)
             print("farger knappene på nytt")
         }
 
@@ -49,16 +49,26 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun enableButton(button: Button){
+        button.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
+        button.isClickable = true
+    }
+
+    private fun disableButton(button: Button){
+        button.setBackgroundColor(resources.getColor(R.color.colorDisabled, null))
+        button.isClickable = false
+    }
+
     fun viewSaved(view: View){
-        openActivity2()
+        openActivity2(this.car.savedClips)
     }
 
     fun viewSentry(view: View){
-        // action
+        openActivity2(this.car.sentryClips)
     }
 
-    private fun openActivity2(){
-        startActivity(MainActivity2.getIntent(this, this.car.savedClips))
+    private fun openActivity2(clips: List<String>){
+        startActivity(MainActivity2.getIntent(this, clips))
     }
 
     fun viewClips(view: View) {
