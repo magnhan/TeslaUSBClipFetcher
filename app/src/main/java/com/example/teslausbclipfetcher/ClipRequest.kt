@@ -24,11 +24,11 @@ object ClipRequest {
                         @Suppress("UNCHECKED_CAST")
                         val savedClips = clips["SavedClips"] as List<String>
                         @Suppress("UNCHECKED_CAST")
-                        val sentryClips = clips["SentryClips"] as List<String>
-                        car.setClips(savedClips, sentryClips)
-                    }
-                }
-        } catch (e: Exception) {
+        val sentryClips = clips["SentryClips"] as List<String>
+            car.setClips(savedClips, sentryClips)
+        }
+    }
+} catch (e: Exception) {
             println(e.message)
         }
     }

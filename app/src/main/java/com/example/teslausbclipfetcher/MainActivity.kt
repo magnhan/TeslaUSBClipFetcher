@@ -10,12 +10,15 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.kittinunf.fuel.core.FuelManager
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import wseemann.media.FFmpegMediaMetadataRetriever
+import kotlin.concurrent.thread
 
 
 class MainActivity : AppCompatActivity() {
 
-    var car: Car = Car("")
+    lateinit var car: Car
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,14 +33,19 @@ class MainActivity : AppCompatActivity() {
         ClipRequest.postRequest(this.car)
         val savedButton: Button = findViewById(R.id.savedButton)
         val sentryButton: Button = findViewById(R.id.sentryButton)
-        while(!this.car.fetched){
-            savedButton.setBackgroundColor(resources.getColor(R.color.colorDisabled, theme))
-            sentryButton.setBackgroundColor(resources.getColor(R.color.colorDisabled, theme))
-            // animation activity
+        thread {
+            while(!this.car.fetched) {
+                savedButton.setBackgroundColor(resources.getColor(R.color.colorDisabled, null))
+                sentryButton.setBackgroundColor(resources.getColor(R.color.colorDisabled, null))
+            }
+            savedButton.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
+            sentryButton.setBackgroundColor(resources.getColor(R.color.colorPrimary, null))
+            print("farger knappene på nytt")
         }
-        this.car.fetched = false
+
+        /*this.car.fetched = false
         savedButton.setBackgroundColor(resources.getColor(R.color.colorPrimary, theme))
-        sentryButton.setBackgroundColor(resources.getColor(R.color.colorPrimary, theme))
+        sentryButton.setBackgroundColor(resources.getColor(R.color.colorPrimary, theme))*/
 
     }
 
@@ -45,21 +53,25 @@ class MainActivity : AppCompatActivity() {
         openActivity2()
     }
 
+    fun viewSentry(view: View){
+        // action
+    }
+
     private fun openActivity2(){
         startActivity(MainActivity2.getIntent(this, this.car.savedClips))
     }
 
-    /*fun viewClips(view: View) {
+    fun viewClips(view: View) {
         if(car.fetched){
 
-            val thumbnailView: ImageView = findViewById(R.id.thumbnail)
+            //val thumbnailView: ImageView = findViewById(R.id.thumbnail)
             var b: Bitmap? = null
             /*for(video in car.savedClips){
                 b = getThumbnail(video)
             }*/
-            thumbnailView.setImageBitmap(getThumbnail(car.savedClips[0]))
+            //thumbnailView.setImageBitmap(getThumbnail(car.savedClips[0]))
         }
-    }*/
+    }
 
     private fun addVideoView(url: String) {
         /*val output: TextView = findViewById(R.id.outputText)
