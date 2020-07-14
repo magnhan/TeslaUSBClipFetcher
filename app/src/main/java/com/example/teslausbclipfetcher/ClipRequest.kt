@@ -8,7 +8,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 object ClipRequest {
     fun postRequest(car: Car) {
-        car.fetched = false
         println("Fetching clips for ${car.vin}")
         try {
             Fuel.post(

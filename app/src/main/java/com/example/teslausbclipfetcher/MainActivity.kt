@@ -1,17 +1,12 @@
 package com.example.teslausbclipfetcher
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.kittinunf.fuel.core.FuelManager
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import wseemann.media.FFmpegMediaMetadataRetriever
 import kotlin.concurrent.thread
 
@@ -40,6 +35,7 @@ class MainActivity : AppCompatActivity() {
             }
             enableButton(savedButton)
             enableButton(sentryButton)
+            this.car.newLoadReady()
             print("farger knappene på nytt")
         }
 
@@ -68,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openActivity2(clips: List<String>){
-        startActivity(MainActivity2.getIntent(this, clips))
+        startActivity(VideoGroupActivity.getIntent(this, clips))
     }
 
     fun viewClips(view: View) {
@@ -108,17 +104,5 @@ class MainActivity : AppCompatActivity() {
         // videoView.start()
         val linearLayout: LinearLayout = findViewById(R.id.root_layout)
         // linearLayout.addView(videoView)*/
-    }
-
-    private fun getThumbnail(videoPath: String): Bitmap {
-        println("Displaying thumbnail")
-        val mmr = FFmpegMediaMetadataRetriever()
-        mmr.setDataSource(videoPath)
-        val b = mmr.getFrameAtTime(
-            1000000,
-            FFmpegMediaMetadataRetriever.OPTION_CLOSEST
-        ) // frame at 1 second
-        mmr.release()
-        return b
     }
 }
