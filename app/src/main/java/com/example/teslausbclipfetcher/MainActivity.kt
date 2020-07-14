@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.github.kittinunf.fuel.core.FuelManager
-import wseemann.media.FFmpegMediaMetadataRetriever
 import kotlin.concurrent.thread
 
 
@@ -64,7 +63,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openActivity2(clips: List<String>){
-        startActivity(VideoGroupActivity.getIntent(this, clips))
+        startActivity(ThumbnailGroupActivity.getIntent(this, clips))
     }
 
     fun viewClips(view: View) {
