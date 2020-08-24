@@ -1,107 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context="com.example.teslausbclipfetcher.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/root_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/editVIN"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:ems="10"
-            android:inputType="text"
-            android:text=""
-            android:hint="VIN"
-            android:autofillHints="text"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/colorPrimary"
-            android:onClick="httpPostJson"
-            android:text="Set car"
-            android:textColor="#ffffff" />
         <LinearLayout
+            android:id="@+id/root_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="10dp"
-            style="?android:attr/buttonBarStyle">
-            <!--<ProgressBar
-                android:id="@+id/progressBar1"
-                style="?android:attr/progressBarStyleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />-->
-            <Button
-                android:id="@+id/savedButton"
-                style="?android:attr/buttonBarButtonStyle"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="5dp"
-                android:background="@color/colorDisabled"
-                android:onClick="viewSaved"
-                android:text="View saved clips"
-                android:textColor="#ffffff"/>
-            <Button
-                android:id="@+id/sentryButton"
-                style="?android:attr/buttonBarButtonStyle"
+                android:text="@string/title_home"
+                android:textColor="#000000"
+                android:textSize="40sp"
+                android:layout_marginTop="48dp"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="16dp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/editVIN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="5dp"
-                android:background="@color/colorDisabled"
-                android:onClick="viewSentry"
-                android:text="View sentry clips"
+                android:layout_margin="10dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text=""
+                android:hint="VIN"
+                android:autofillHints="text"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/layout_primary_button"
+                android:onClick="httpPostJson"
+                android:text="Set car"
                 android:textColor="#ffffff"/>
+                <Button
+                    android:id="@+id/savedButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/layout_secondary_button"
+                    android:onClick="viewSaved"
+                    android:text="@string/saved_button"
+                    android:textAllCaps="false"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"/>
+                <Button
+                    android:id="@+id/sentryButton"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/layout_secondary_button"
+                    android:onClick="viewSentry"
+                    android:text="@string/sentry_button"
+                    android:textAllCaps="false"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"/>
         </LinearLayout>
-        <!--<ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/savedClips"/>
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"
-            android:id="@+id/sentryClips"/>
-        <TextView
-            android:id="@+id/outputText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"/>
-        <VideoView
-            android:id="@+id/youtubeView"
-            android:layout_width="wrap_content"
-            android:layout_height="250dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/bottom_nav_menu" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/nav_view"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"-->
-    </LinearLayout>
+        app:layout_constraintVertical_bias="0.0"
+        app:navGraph="@navigation/mobile_navigation" />
 
 
-</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

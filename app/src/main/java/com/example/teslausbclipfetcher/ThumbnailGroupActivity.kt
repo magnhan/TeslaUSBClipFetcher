@@ -43,24 +43,24 @@ class ThumbnailGroupActivity : AppCompatActivity() {
     }
 
     private fun loadThumbnails(){
+        println("LOADING THUMBNAILS")
         val linearLayout: LinearLayout = findViewById(R.id.linearLayout)
         val thumbnailLayouts: ArrayList<ImageView> = ArrayList<ImageView>()
         val params = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        /*
         params.setMargins(10, 10, 10, 0)
         for(i in 0 until clipSize) {
             val thumbnailView = ImageView(this)
             thumbnailView.layoutParams = params
             thumbnailView.id = i
-            thumbnailView.setImageBitmap(b.value)
+            thumbnailView.setImageBitmap(getThumbnail(clipsGotten[i*4]))
             thumbnailLayouts.add(thumbnailView)
         }
         for(view in thumbnailLayouts){
             linearLayout.addView(view)
-        }*/
+        }
 
     }
 
@@ -72,20 +72,16 @@ class ThumbnailGroupActivity : AppCompatActivity() {
         }
     }
 
-    /*private suspend fun getThumbnail(videoPaths: ArrayList<String>): ArrayList<Bitmap> {
-        val thumbnailList: ArrayList<Bitmap> = ArrayList<Bitmap>()
-        for(videoPath in videoPaths) {
-            println("Displaying thumbnail for $videoPath")
-            val mmr = FFmpegMediaMetadataRetriever()
-            mmr.setDataSource(videoPath)
-            val b = mmr.getFrameAtTime(
-                100000,
-                FFmpegMediaMetadataRetriever.OPTION_CLOSEST
-            )
-            mmr.release()
-            thumbnailList.add(b)
-        }
-        return thumbnailList
-    }*/
+    private fun getThumbnail(videoPath: String): Bitmap {
+        println("Displaying thumbnail for $videoPath")
+        val mmr = FFmpegMediaMetadataRetriever()
+        mmr.setDataSource(videoPath)
+        val b = mmr.getFrameAtTime(
+            100000,
+            FFmpegMediaMetadataRetriever.OPTION_CLOSEST
+        )
+        mmr.release()
+        return b
+    }
 }
 

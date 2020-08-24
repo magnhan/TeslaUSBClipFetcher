@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         FuelManager.instance.basePath = "http://www.teslausb-281110.ey.r.appspot.com"
+
     }
 
     fun httpPostJson(view: View) {
